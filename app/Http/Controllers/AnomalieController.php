@@ -328,11 +328,11 @@ public function destroy($id)
     // Calculer les utilisateurs les plus actifs RAST
     $topUsersRast = $anomalies
         ->where('structure', 'RAST')
-        ->filter(fn($a) => !empty($a->rapporte_par)) // Filtrer les anomalies sans nom
+        ->filter(fn($a) => !empty($a->rapporte_par)) 
         ->groupBy('rapporte_par')
         ->map(function ($group) {
             return [
-                'nom' => $group->first()->rapporte_par, // Utiliser directement rapporte_par
+                'nom' => $group->first()->rapporte_par, 
                 'nombre' => $group->count()
             ];
         })
@@ -355,7 +355,6 @@ public function destroy($id)
             'mensuel' => array_values($mensuel),
             'mensuel_cloturees' => array_values($mensuelCloturees),
             
-            // Utilisateurs les plus actifs
             'utilisateurs_top_eres' => $topUsersEres,
             'utilisateurs_top_rast' => $topUsersRast,
         ],

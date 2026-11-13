@@ -8,6 +8,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\AdminAccessController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DepartmentController;
+
 
 
 // ================= Page de Connexion =================
@@ -147,3 +149,9 @@ Route::delete('/anomalies/{id}', [AnomalieController::class, 'destroy'])
 
 
 });
+
+Route::post('/admin/departments', [DepartmentController::class, 'store'])
+    ->name('admin.departments.store');
+
+Route::delete('/admin/departments/{department}', [DepartmentController::class, 'destroy'])
+    ->name('admin.departments.destroy');

@@ -65,19 +65,17 @@
                        value="{{ old('email') }}">
             </div>
 
-            <!-- Département -->
+            <!-- Département (liste lue depuis la table departments) -->
             <div>
                 <label for="department" class="block mb-2 font-semibold text-gray-700">
                     Département <span class="text-red-500">*</span>
                 </label>
                 <select name="department" id="department" required
                         class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-green-500 focus:border-green-500">
-                    <option value="" disabled selected>Choisir votre département</option>
-                    <option value="Technique" {{ old('department') == 'Technique' ? 'selected' : '' }}>Technique</option>
-                    <option value="Logistique" {{ old('department') == 'Logistique' ? 'selected' : '' }}>Logistique</option>
-                    <option value="Administratif" {{ old('department') == 'Administratif' ? 'selected' : '' }}>Administratif</option>
-                    <option value="Commercial" {{ old('department') == 'Commercial' ? 'selected' : '' }}>Commercial</option>
-                    <option value="Achat" {{ old('department') == 'Achat' ? 'selected' : '' }}>Achat</option>
+                    <option value="" disabled {{ old('department') ? '' : 'selected' }}>Choisir votre département</option>
+                    @foreach(\App\Models\Department::orderBy('name')->pluck('name') as $dept)
+                        <option value="{{ $dept }}" {{ old('department') == $dept ? 'selected' : '' }}>{{ $dept }}</option>
+                    @endforeach
                 </select>
             </div>
 

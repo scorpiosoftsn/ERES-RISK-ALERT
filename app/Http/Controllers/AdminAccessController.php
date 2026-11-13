@@ -2,18 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminAccessController extends Controller
 {
 
-  /**
+    /**
      * Redirection après connexion ou inscription
      */
     protected function redirectTo()
     {
         return Auth::user()->role === 'admin' ? '/dashboard' : '/formulaire';
     }
+
+
     // Vérifier mot de passe maître
     public function checkMasterPassword(Request $request)
     {
@@ -36,7 +41,9 @@ class AdminAccessController extends Controller
     public function dashboard()
     {
         return view('admin.dashboardadminP', [
-            'users' => \App\Models\User::all(),
+            'users'       => User::all(),
+            'departments' => Department::orderBy('name')->get(),
         ]);
     }
+
 }

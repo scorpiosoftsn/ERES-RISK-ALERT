@@ -9,6 +9,9 @@ use App\Models\User;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ResetPasswordMail;
+use Illuminate\Validation\Rule;
+
+
 
 class ERESAuthController extends Controller
 {
@@ -24,14 +27,9 @@ class ERESAuthController extends Controller
         return '/formulaire';
     }
 
-    // Si l'utilisateur est admin → afficher page de choix
     return '/admin/choix-connexion';
 }
 
-
-    // ==================================================================
-    // CONNEXION
-    // ==================================================================
 
     public function showLogin()
     {
@@ -56,9 +54,6 @@ class ERESAuthController extends Controller
         ], 401);
     }
 
-    // ==================================================================
-    // INSCRIPTION (mise à jour pour firstname + lastname)
-    // ==================================================================
 
     public function showRegister()
     {
@@ -72,12 +67,11 @@ class ERESAuthController extends Controller
             'firstname'  => 'required|string|max:100',
             'lastname'   => 'required|string|max:100',
             'email'      => 'required|email|unique:users,email|max:255',
-            'department' => 'required|string|in:Technique,Logistique,Administratif,Commercial,Achat',
+            'department' => ['required', Rule::exists('departments', 'name')],
             'password'   => 'required|string|min:8|confirmed',
             'admin_code' => 'nullable|string|max:50',
         ]);
 
-        // Code admin secret
         $isAdmin = $request->admin_code === 'r!sk@lert#26';
 
       $user = User::create([
@@ -111,9 +105,7 @@ class ERESAuthController extends Controller
         ], 500);
     }
 }
-    // ==================================================================
     // RÉINITIALISATION MOT DE PASSE
-    // ==================================================================
 
     public function showResetForm(Request $request, $token = null)
     {
@@ -179,9 +171,7 @@ class ERESAuthController extends Controller
         }
     }
 
-    // ==================================================================
     // DÉCONNEXION
-    // ==================================================================
 
   public function logout(Request $request)
 {

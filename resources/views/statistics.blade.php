@@ -667,8 +667,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     datasets:[{
                         label:'Nombre d\'anomalies',
                         data:deptCounts,
-                        backgroundColor:'#0a204e',
-                        borderColor:'#0c2b6d',
+                        backgroundColor:'#0a78a3',
+                        borderColor:'#0a30ad',
                         borderWidth:1,
                         borderRadius:6
                     }]
